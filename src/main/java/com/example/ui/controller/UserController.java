@@ -2,6 +2,7 @@ package com.example.ui.controller;
 
 import com.example.ui.model.User;
 import com.example.ui.model.UserRequest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,13 +16,27 @@ public class UserController {
         return "get user was page: " + page + ", limit " + limit + ", sort " + sort;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
+    @RequestMapping(
+            method = RequestMethod.GET,
+            path = "/{userId}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE}
+    )
     public User getUser(@PathVariable String userId) {
         final User user = new User(userId, "Hello", "World", "hello.world@example.com");
         return user;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE},
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE}
+    )
     public User createUser(@RequestBody UserRequest userRequest) {
         final User user = new User("1", userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
         return user;
