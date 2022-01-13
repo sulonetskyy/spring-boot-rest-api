@@ -1,5 +1,6 @@
 package com.example.ui.controller;
 
+import com.example.ui.model.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +15,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{userId}")
-    public String getUser(@PathVariable String userId) {
-        return "get user with id [" + userId + "] was called";
+    public User getUser(@PathVariable String userId) {
+        final User user = new User(userId, "Hello", "World", "hello.world@example.com");
+        return user;
     }
 
     @RequestMapping(method = RequestMethod.POST)
