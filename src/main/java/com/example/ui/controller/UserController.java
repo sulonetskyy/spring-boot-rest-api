@@ -2,7 +2,9 @@ package com.example.ui.controller;
 
 import com.example.ui.model.User;
 import com.example.ui.model.UserRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,9 +25,9 @@ public class UserController {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE}
     )
-    public User getUser(@PathVariable String userId) {
+    public ResponseEntity<User> getUser(@PathVariable String userId) {
         final User user = new User(userId, "Hello", "World", "hello.world@example.com");
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -37,9 +39,9 @@ public class UserController {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE}
     )
-    public User createUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         final User user = new User("1", userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
