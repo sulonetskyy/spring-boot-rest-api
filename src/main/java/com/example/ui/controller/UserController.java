@@ -1,6 +1,7 @@
 package com.example.ui.controller;
 
 import com.example.ui.model.User;
+import com.example.ui.model.UserRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +22,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser() {
-        return "create user was called";
+    public User createUser(@RequestBody UserRequest userRequest) {
+        final User user = new User("1", userRequest.getFirstName(), userRequest.getLastName(), userRequest.getEmail());
+        return user;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
